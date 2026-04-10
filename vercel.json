@@ -8,6 +8,10 @@
     {
       "source": "/api/(.*)",
       "destination": "https://luxe-perfume-server.onrender.com/api/:path*"
+    },
+    {
+      "source": "/((?!assets).*)",
+      "destination": "/index.html"
     }
   ],
   "headers": [
