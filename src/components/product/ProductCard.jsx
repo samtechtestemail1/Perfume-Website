@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { formatCurrency } from '../../utils/currency';
 import { useCart } from '../../context/CartContext';
@@ -183,13 +183,25 @@ const ProductCard = ({ product }) => {
   const { isAuthenticated } = useAuth();
   const [showQuickView, setShowQuickView] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
+  const [showToast, setShowToast] = useState(false);
+  const location = useLocation();
 
   const handleAddToCart = (e) => {
     e.preventDefault();
+    e.stopPropagation();
     if (product.stockQuantity > 0) {
       addToCart(product);
+      setShowToast(true);
+      setTimeout(() => setShowToast(false), 3000);
     }
   };
+
+  useEffect(() => {
+    if (showToast) {
+      const timer = setTimeout(() => setShowToast(false), 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [showToast]);
 
   return (
     <>
@@ -267,6 +279,12 @@ const ProductCard = ({ product }) => {
               >
                 {product.stockQuantity === 0 ? 'Out of Stock' : 'Add to Bag'}
               </button>
+              <Link
+                to="/cart"
+                className="block w-full py-2 mt-2 text-center text-xs text-gold-300 hover:text-gold-200 transition-colors uppercase tracking-wide"
+              >
+                View Bag
+              </Link>
             </div>
           </div>
           
@@ -309,6 +327,34 @@ const ProductCard = ({ product }) => {
         isOpen={showQuickView} 
         onClose={() => setShowQuickView(false)} 
       />
+
+      {/* Toast Notification */}
+      <AnimatePresence>
+        {showToast && (
+          <motion.div
+            initial={{ opacity: 0, y: 20, x: '-50%' }}
+            animate={{ opacity: 1, y: 0, x: '-50%' }}
+            exit={{ opacity: 0, y: 20, x: '-50%' }}
+            className="fixed bottom-6 left-1/2 z-[200] px-6 py-3 bg-charcoal-100 border border-emerald-500/30 rounded-xl shadow-lg flex items-center gap-3"
+          >
+            <div className="w-6 h-6 bg-emerald-500/20 rounded-full flex items-center justify-center">
+              <svg className="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
+            <div>
+              <p className="text-ivory-100 text-sm font-medium">Added to bag</p>
+              <p className="text-ivory-100/50 text-xs">{product.name}</p>
+            </div>
+            <Link
+              to="/cart"
+              className="ml-2 px-3 py-1.5 bg-gold-300/20 text-gold-300 text-xs rounded-lg hover:bg-gold-300/30 transition-colors"
+            >
+              View Bag
+            </Link>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 };

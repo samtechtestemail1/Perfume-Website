@@ -25,6 +25,7 @@ import AdminInventory from './pages/admin/AdminInventory';
 import AdminCoupons from './pages/admin/AdminCoupons';
 import AdminPOS from './pages/admin/AdminPOS';
 import Checkout from './pages/public/Checkout';
+import CartPage from './pages/public/CartPage';
 import ProtectedRoute from './components/common/ProtectedRoute';
 import AdminRoute from './components/common/AdminRoute';
 
@@ -41,6 +42,7 @@ function App() {
               <Route path="about" element={<About />} />
               <Route path="contact" element={<Contact />} />
               <Route path="checkout" element={<Checkout />} />
+              <Route path="cart" element={<CartPage />} />
               <Route path="login" element={<Login />} />
               <Route path="signup" element={<Signup />} />
               <Route path="forgot-password" element={<ForgotPassword />} />
