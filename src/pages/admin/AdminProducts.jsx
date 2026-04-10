@@ -208,24 +208,26 @@ const AdminProducts = () => {
 
   return (
     <div className="min-h-screen bg-charcoal-300">
-      <div className="bg-charcoal-200/50 border-b border-ivory-100/10">
-        <div className="container mx-auto px-6 py-8">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="heading-3 text-ivory-100">Products</h1>
-              <p className="text-ivory-100/50 font-light mt-1">Manage your product catalog</p>
-            </div>
-            <button
-              onClick={() => { resetForm(); setEditingProduct(null); setShowModal(true); }}
-              className="btn-primary rounded-xl"
-            >
-              Add Product
-            </button>
+      {/* Page Header */}
+      <div className="px-6 pt-8 pb-6">
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="heading-2 text-ivory-100">Products</h1>
+            <p className="text-ivory-100/50 font-light mt-1">Manage your product catalog</p>
           </div>
+          <button
+            onClick={() => { resetForm(); setEditingProduct(null); setShowModal(true); }}
+            className="inline-flex items-center gap-2 px-6 py-3 bg-gold-300 text-charcoal-300 text-xs font-medium uppercase tracking-wider rounded-xl hover:bg-gold-200 transition-colors"
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4" />
+            </svg>
+            Add Product
+          </button>
         </div>
       </div>
 
-      <div className="container mx-auto px-6 py-8">
+      <div className="px-6 pb-8">
         {/* Filters */}
         <div className="bg-charcoal-100/30 border border-ivory-100/10 rounded-2xl p-6 mb-8 backdrop-blur-sm">
           <div className="flex flex-col md:flex-row gap-4">

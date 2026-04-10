@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { CartProvider } from './context/CartContext';
 import Layout from './components/layout/Layout';
+import AdminLayout from './components/layout/AdminLayout';
 import Home from './pages/public/Home';
 import Shop from './pages/public/Shop';
 import ProductDetails from './pages/public/ProductDetails';
@@ -50,8 +51,10 @@ function App() {
                 <Route path="profile" element={<Profile />} />
                 <Route path="wishlist" element={<Wishlist />} />
               </Route>
-              
-              <Route element={<AdminRoute />}>
+            </Route>
+
+            <Route element={<AdminRoute />}>
+              <Route element={<AdminLayout />}>
                 <Route path="admin" element={<AdminDashboard />} />
                 <Route path="admin/products" element={<AdminProducts />} />
                 <Route path="admin/orders" element={<AdminOrders />} />

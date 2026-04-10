@@ -133,31 +133,23 @@ const AdminDashboard = () => {
 
   return (
     <div className="min-h-screen bg-charcoal-300">
-      {/* Header */}
-      <div className="bg-charcoal-200/50 border-b border-ivory-100/10">
-        <div className="container mx-auto px-6 py-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="flex items-center justify-between"
-          >
-            <div>
-              <h1 className="heading-3 text-ivory-100">Admin Dashboard</h1>
-              <p className="text-ivory-100/50 font-light mt-1">Overview of your store's performance</p>
-            </div>
-            <div className="flex items-center gap-3">
-              <Link to="/admin/products" className="inline-flex items-center gap-2 px-6 py-3 bg-gold-300 text-charcoal-300 text-xs font-medium uppercase tracking-wider rounded-xl hover:bg-gold-200 transition-colors">
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4" />
-                </svg>
-                Add Product
-              </Link>
-            </div>
-          </motion.div>
+      {/* Page Header */}
+      <div className="px-6 pt-8 pb-6">
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="heading-2 text-ivory-100">Dashboard</h1>
+            <p className="text-ivory-100/50 font-light mt-1">Overview of your store's performance</p>
+          </div>
+          <Link to="/admin/products" className="inline-flex items-center gap-2 px-6 py-3 bg-gold-300 text-charcoal-300 text-xs font-medium uppercase tracking-wider rounded-xl hover:bg-gold-200 transition-colors">
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4" />
+            </svg>
+            Add Product
+          </Link>
         </div>
       </div>
 
-      <div className="container mx-auto px-6 py-8">
+      <div className="px-6">
         {/* Stats Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
           {loading ? (

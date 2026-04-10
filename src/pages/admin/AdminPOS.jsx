@@ -97,19 +97,18 @@ const AdminPOS = () => {
 
   return (
     <div className="min-h-screen bg-charcoal-300">
-      <div className="bg-charcoal-200/50 border-b border-ivory-100/10">
-        <div className="container mx-auto px-6 py-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-          >
-            <h1 className="heading-3 text-ivory-100">Point of Sale</h1>
-            <p className="text-ivory-100/50 font-light mt-1">Process in-person sales</p>
-          </motion.div>
-        </div>
+      {/* Page Header */}
+      <div className="px-6 pt-8 pb-6">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+        >
+          <h1 className="heading-2 text-ivory-100">Point of Sale</h1>
+          <p className="text-ivory-100/50 font-light mt-1">Process in-person sales</p>
+        </motion.div>
       </div>
 
-      <div className="container mx-auto px-6 py-8">
+      <div className="px-6 pb-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Products Grid */}
           <div className="lg:col-span-2">

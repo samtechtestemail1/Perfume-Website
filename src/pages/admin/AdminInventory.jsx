@@ -56,43 +56,43 @@ const AdminInventory = () => {
 
   return (
     <div className="min-h-screen bg-charcoal-300">
-      <div className="bg-charcoal-200/50 border-b border-ivory-100/10">
-        <div className="container mx-auto px-6 py-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="flex flex-col md:flex-row md:items-center md:justify-between gap-4"
-          >
-            <div>
-              <h1 className="heading-3 text-ivory-100">Inventory</h1>
-              <p className="text-ivory-100/50 font-light mt-1">Monitor and manage stock levels</p>
-            </div>
-
-            <div className="flex gap-2">
-              {[
-                { key: 'all', label: 'All' },
-                { key: 'in', label: 'In Stock' },
-                { key: 'low', label: 'Low Stock' },
-                { key: 'out', label: 'Out of Stock' }
-              ].map((status) => (
-                <button
-                  key={status.key}
-                  onClick={() => setFilter(status.key)}
-                  className={`px-4 py-2 rounded-lg transition-all text-sm font-light ${
-                    filter === status.key
-                      ? 'bg-gold-300 text-charcoal-300'
-                      : 'bg-charcoal-100/30 border border-ivory-100/10 text-ivory-100/70 hover:text-ivory-100 hover:border-ivory-100/30'
-                  }`}
-                >
-                  {status.label}
-                </button>
-              ))}
-            </div>
-          </motion.div>
-        </div>
+      {/* Page Header */}
+      <div className="px-6 pt-8 pb-6">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+        >
+          <h1 className="heading-2 text-ivory-100">Inventory</h1>
+          <p className="text-ivory-100/50 font-light mt-1">Track and manage your stock levels</p>
+        </motion.div>
       </div>
 
-      <div className="container mx-auto px-6 py-8">
+      <div className="px-6 pb-8">
+        {/* Filters */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="flex flex-wrap gap-2 mb-6"
+        >
+          {[
+            { key: 'all', label: 'All' },
+            { key: 'in', label: 'In Stock' },
+            { key: 'low', label: 'Low Stock' },
+            { key: 'out', label: 'Out of Stock' }
+          ].map((status) => (
+            <button
+              key={status.key}
+              onClick={() => setFilter(status.key)}
+              className={`px-4 py-2 rounded-lg transition-all text-sm font-light ${
+                filter === status.key
+                  ? 'bg-gold-300 text-charcoal-300'
+                  : 'bg-charcoal-100/30 border border-ivory-100/10 text-ivory-100/70 hover:text-ivory-100 hover:border-ivory-100/30'
+              }`}
+            >
+              {status.label}
+            </button>
+          ))}
+        </motion.div>
         {/* Stats */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           <div className="bg-charcoal-100/30 border border-emerald-500/20 rounded-2xl p-6">

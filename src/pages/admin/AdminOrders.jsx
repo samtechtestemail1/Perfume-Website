@@ -43,19 +43,18 @@ const AdminOrders = () => {
 
   return (
     <div className="min-h-screen bg-charcoal-300">
-      <div className="bg-charcoal-200/50 border-b border-ivory-100/10">
-        <div className="container mx-auto px-6 py-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-          >
-            <h1 className="heading-3 text-ivory-100">Orders</h1>
-            <p className="text-ivory-100/50 font-light mt-1">Manage and track all orders</p>
-          </motion.div>
-        </div>
+      {/* Page Header */}
+      <div className="px-6 pt-8 pb-6">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+        >
+          <h1 className="heading-2 text-ivory-100">Orders</h1>
+          <p className="text-ivory-100/50 font-light mt-1">Manage and track all orders</p>
+        </motion.div>
       </div>
 
-      <div className="container mx-auto px-6 py-8">
+      <div className="px-6 pb-8">
         {loading ? (
           <div className="bg-charcoal-100/30 border border-ivory-100/10 rounded-2xl p-8">
             <div className="space-y-4">
