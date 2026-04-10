@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import axios from 'axios';
+import api from '../../utils/api';
 
 const AdminInventory = () => {
   const [products, setProducts] = useState([]);
@@ -18,7 +18,7 @@ const AdminInventory = () => {
       if (filter !== 'all') {
         url += `?status=${filter}`;
       }
-      const response = await axios.get(url, {
+      const response = await api.get(url, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setProducts(response.data.products);
@@ -34,7 +34,7 @@ const AdminInventory = () => {
       const token = localStorage.getItem('token');
       const product = products.find(p => p._id === productId);
       
-      await axios.put(`/api/products/${productId}/stock`, {
+      await api.put(`/products/${productId}/stock`, {
         quantity: newQuantity,
         reason: 'Manual adjustment'
       }, {

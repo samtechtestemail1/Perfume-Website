@@ -6,7 +6,7 @@
   "rewrites": [
     {
       "source": "/api/(.*)",
-      "destination": "https://your-backend.onrender.com/api/$1"
+      "destination": "https://luxe-perfume-server.onrender.com/api/:path*"
     }
   ],
   "headers": [

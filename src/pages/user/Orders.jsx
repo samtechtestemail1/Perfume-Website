@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import axios from 'axios';
+import api from '../../utils/api';
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
@@ -11,7 +11,7 @@ const Orders = () => {
     const fetchOrders = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await axios.get('/api/orders', {
+        const response = await api.get('/orders', {
           headers: { Authorization: `Bearer ${token}` }
         });
         setOrders(response.data.orders);

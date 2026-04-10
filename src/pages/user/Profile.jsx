@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useAuth } from '../../context/AuthContext';
-import axios from 'axios';
+import api from '../../utils/api';
 
 const Profile = () => {
   const { user, updateUser } = useAuth();
@@ -35,12 +35,7 @@ const Profile = () => {
     setSuccess(false);
 
     try {
-      const token = localStorage.getItem('token');
-      const response = await axios.put(
-        '/api/auth/profile',
-        formData,
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+      const response = await api.put('/auth/profile', formData);
       updateUser(response.data.user);
       setSuccess(true);
     } catch (err) {
@@ -63,15 +58,10 @@ const Profile = () => {
     setSuccess(false);
 
     try {
-      const token = localStorage.getItem('token');
-      await axios.put(
-        '/api/auth/password',
-        {
-          currentPassword: passwordData.currentPassword,
-          newPassword: passwordData.newPassword
-        },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+      await api.put('/auth/password', {
+        currentPassword: passwordData.currentPassword,
+        newPassword: passwordData.newPassword
+      });
       setSuccess(true);
       setPasswordData({ currentPassword: '', newPassword: '', confirmPassword: '' });
     } catch (err) {

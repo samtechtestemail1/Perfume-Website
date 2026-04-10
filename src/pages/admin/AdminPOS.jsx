@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import axios from 'axios';
+import api from '../../utils/api';
 
 const AdminPOS = () => {
   const [products, setProducts] = useState([]);
@@ -16,7 +16,7 @@ const AdminPOS = () => {
 
   const fetchProducts = async () => {
     try {
-      const response = await axios.get('/api/products?inStock=true&limit=100');
+        const response = await api.get('/products?inStock=true&limit=100');
       setProducts(response.data.products);
     } catch (error) {
       console.error('Failed to fetch products:', error);
@@ -70,7 +70,7 @@ const AdminPOS = () => {
     setProcessing(true);
     try {
       const token = localStorage.getItem('token');
-      await axios.post('/api/sales/in-person', {
+      await api.post('/sales/in-person', {
         items: cart.map(item => ({
           product: item._id,
           quantity: item.quantity

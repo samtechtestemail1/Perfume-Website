@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useReducer, useEffect } from 'react';
-import axios from 'axios';
+import api from '../utils/api';
 import { useAuth } from './AuthContext';
 
 const CartContext = createContext();
@@ -126,9 +126,7 @@ export const CartProvider = ({ children }) => {
         paymentMethod: 'cod'
       };
 
-      const response = await axios.post('/api/orders', orderData, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      const response = await api.post('/orders', orderData);
 
       clearCart();
       return { success: true, order: response.data.order };

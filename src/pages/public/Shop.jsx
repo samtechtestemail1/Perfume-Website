@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import axios from 'axios';
+import api from '../../utils/api';
 import { useCart } from '../../context/CartContext';
 
 const Shop = () => {
@@ -37,7 +37,7 @@ const Shop = () => {
       if (filters.sort) params.append('sort', filters.sort);
       if (filters.inStock) params.append('inStock', 'true');
 
-      const response = await axios.get(`/api/products?${params.toString()}`);
+      const response = await api.get(`/products?${params.toString()}`);
       setProducts(response.data.products);
       setPagination(response.data.pagination);
     } catch (error) {

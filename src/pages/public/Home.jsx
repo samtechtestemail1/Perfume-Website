@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import axios from 'axios';
+import api from '../../utils/api';
 import { useCart } from '../../context/CartContext';
 
 const Home = () => {
@@ -12,7 +12,7 @@ const Home = () => {
   useEffect(() => {
     const fetchFeaturedProducts = async () => {
       try {
-        const response = await axios.get('/api/products/featured');
+        const response = await api.get('/products/featured');
         setFeaturedProducts(response.data.products);
       } catch (error) {
         console.error('Failed to fetch featured products:', error);

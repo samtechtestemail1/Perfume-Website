@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import axios from 'axios';
+import api from '../../utils/api';
 import { useCart } from '../../context/CartContext';
 
 const Wishlist = () => {
@@ -13,7 +13,7 @@ const Wishlist = () => {
     const fetchWishlist = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await axios.get('/api/users/wishlist', {
+        const response = await api.get('/users/wishlist', {
           headers: { Authorization: `Bearer ${token}` }
         });
         setWishlist(response.data.wishlist);
@@ -30,7 +30,7 @@ const Wishlist = () => {
   const removeFromWishlist = async (productId) => {
     try {
       const token = localStorage.getItem('token');
-      await axios.delete(`/api/users/wishlist/${productId}`, {
+      await api.delete(`/users/wishlist/${productId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setWishlist(wishlist.filter(item => item._id !== productId));

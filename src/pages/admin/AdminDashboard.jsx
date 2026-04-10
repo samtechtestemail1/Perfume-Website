@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import axios from 'axios';
+import api from '../../utils/api';
 
 const AdminDashboard = () => {
   const [stats, setStats] = useState(null);
@@ -11,7 +11,7 @@ const AdminDashboard = () => {
     const fetchStats = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await axios.get('/api/admin/dashboard', {
+        const response = await api.get('/admin/dashboard', {
           headers: { Authorization: `Bearer ${token}` }
         });
         setStats(response.data.stats);

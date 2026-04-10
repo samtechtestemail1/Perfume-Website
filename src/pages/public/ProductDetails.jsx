@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import axios from 'axios';
+import api from '../../utils/api';
 import { useCart } from '../../context/CartContext';
 import { useAuth } from '../../context/AuthContext';
 
@@ -21,10 +21,10 @@ const ProductDetails = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const response = await axios.get(`/api/products/${id}`);
+        const response = await api.get(`/products/${id}`);
         setProduct(response.data.product);
         
-        const relatedResponse = await axios.get(`/api/products/${id}/related`);
+        const relatedResponse = await api.get(`/products/${id}/related`);
         setRelatedProducts(relatedResponse.data.products);
       } catch (error) {
         console.error('Failed to fetch product:', error);
@@ -48,12 +48,8 @@ const ProductDetails = () => {
     const comment = formData.get('comment');
 
     try {
-      await axios.post(
-        `/api/products/${id}/reviews`,
-        { rating: reviewRating, comment },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-      const response = await axios.get(`/api/products/${id}`);
+      await api.post(`/products/${id}/reviews`, { rating: reviewRating, comment });
+      const response = await api.get(`/products/${id}`);
       setProduct(response.data.product);
       e.target.reset();
       setReviewRating(0);

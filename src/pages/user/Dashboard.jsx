@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useAuth } from '../../context/AuthContext';
-import axios from 'axios';
+import api from '../../utils/api';
 
 const Dashboard = () => {
   const { user } = useAuth();
@@ -13,7 +13,7 @@ const Dashboard = () => {
     const fetchOrders = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await axios.get('/api/orders', {
+        const response = await api.get('/orders', {
           headers: { Authorization: `Bearer ${token}` }
         });
         setOrders(response.data.orders.slice(0, 5));

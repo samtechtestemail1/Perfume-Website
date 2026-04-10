@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import axios from 'axios';
+import api from '../../utils/api';
 
 const AdminProducts = () => {
   const [products, setProducts] = useState([]);
@@ -24,7 +24,7 @@ const AdminProducts = () => {
   const fetchProducts = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get('/api/admin/products', {
+        const response = await api.get('/admin/products', {
         headers: { Authorization: `Bearer ${token}` }
       });
       setProducts(response.data.products);
@@ -39,7 +39,7 @@ const AdminProducts = () => {
     if (window.confirm('Are you sure you want to delete this product?')) {
       try {
         const token = localStorage.getItem('token');
-        await axios.delete(`/api/products/${id}`, {
+        await api.delete(`/products/${id}`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         setProducts(products.filter(p => p._id !== id));
@@ -68,11 +68,11 @@ const AdminProducts = () => {
     try {
       const token = localStorage.getItem('token');
       if (editingProduct) {
-        await axios.put(`/api/products/${editingProduct._id}`, formData, {
+        await api.put(`/products/${editingProduct._id}`, formData, {
           headers: { Authorization: `Bearer ${token}` }
         });
       } else {
-        await axios.post('/api/products', formData, {
+        await api.post('/products', formData, {
           headers: { Authorization: `Bearer ${token}` }
         });
       }

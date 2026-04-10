@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import axios from 'axios';
+import api from '../../utils/api';
 
 const AdminUsers = () => {
   const [users, setUsers] = useState([]);
@@ -13,7 +13,7 @@ const AdminUsers = () => {
   const fetchUsers = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get('/api/admin/users', {
+        const response = await api.get('/admin/users', {
         headers: { Authorization: `Bearer ${token}` }
       });
       setUsers(response.data.users);
@@ -27,7 +27,7 @@ const AdminUsers = () => {
   const updateRole = async (userId, role) => {
     try {
       const token = localStorage.getItem('token');
-      await axios.put(`/api/admin/users/${userId}`, { role }, {
+      await api.put(`/admin/users/${userId}`, { role }, {
         headers: { Authorization: `Bearer ${token}` }
       });
       fetchUsers();

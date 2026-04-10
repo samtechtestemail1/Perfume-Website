@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useReducer, useEffect } from 'react';
-import axios from 'axios';
+import api from '../utils/api';
 
 const AuthContext = createContext();
 
@@ -54,9 +54,7 @@ export const AuthProvider = ({ children }) => {
       const token = localStorage.getItem('token');
       if (token) {
         try {
-          const response = await axios.get('/api/auth/me', {
-            headers: { Authorization: `Bearer ${token}` }
-          });
+          const response = await api.get('/auth/me');
           dispatch({
             type: 'AUTH_SUCCESS',
             payload: {
@@ -78,7 +76,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
-      const response = await axios.post('/api/auth/login', { email, password });
+      const response = await api.post('/auth/login', { email, password });
       localStorage.setItem('token', response.data.token);
       dispatch({
         type: 'AUTH_SUCCESS',
@@ -98,7 +96,7 @@ export const AuthProvider = ({ children }) => {
 
   const signup = async (name, email, password) => {
     try {
-      const response = await axios.post('/api/auth/signup', { name, email, password });
+      const response = await api.post('/auth/signup', { name, email, password });
       localStorage.setItem('token', response.data.token);
       dispatch({
         type: 'AUTH_SUCCESS',
