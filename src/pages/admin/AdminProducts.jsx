@@ -73,7 +73,7 @@ const AdminProducts = () => {
     }
 
     try {
-      const response = await api.post('/upload/upload', formDataUpload, {
+      const response = await api.post('/upload', formDataUpload, {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
       
@@ -93,7 +93,7 @@ const AdminProducts = () => {
     
     if (image.public_id) {
       try {
-        await api.delete(`/upload/delete/${image.public_id}`);
+        await api.delete(`/upload/${image.public_id}`);
       } catch (error) {
         console.error('Failed to delete image from cloud:', error);
       }
