@@ -1,12 +1,19 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { formatCurrency } from '../../utils/currency';
 import { useCart } from '../../context/CartContext';
 
 const CartSidebar = () => {
   const { cart, removeFromCart, updateQuantity, getCartTotal, clearCart } = useCart();
+  const [showDetails, setShowDetails] = useState(false);
   const subtotal = getCartTotal();
+  const navigate = useNavigate();
+
+  const handleProceedToCheckout = () => {
+    document.dispatchEvent(new CustomEvent('toggle-cart'));
+    navigate('/checkout');
+  };
 
   return (
     <AnimatePresence>
@@ -129,6 +136,48 @@ const CartSidebar = () => {
               ))}
             </div>
 
+            {/* Details Section */}
+            <AnimatePresence>
+              {showDetails && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: 'auto' }}
+                  exit={{ opacity: 0, height: 0 }}
+                  className="border-t border-ivory-100/10 bg-charcoal-100/50"
+                >
+                  <div className="p-6 space-y-3">
+                    <h3 className="text-sm font-serif text-ivory-100 mb-3">Order Summary</h3>
+                    {cart.map((item) => (
+                      <div key={item.product._id} className="flex justify-between text-sm">
+                        <span className="text-ivory-100/60">
+                          {item.product.name} x {item.quantity}
+                        </span>
+                        <span className="text-ivory-100">{formatCurrency(item.product.price * item.quantity)}</span>
+                      </div>
+                    ))}
+                    <div className="border-t border-ivory-100/10 pt-3 mt-3">
+                      <div className="flex justify-between">
+                        <span className="text-ivory-100/60">Subtotal</span>
+                        <span className="text-ivory-100">{formatCurrency(subtotal)}</span>
+                      </div>
+                      <div className="flex justify-between mt-1">
+                        <span className="text-ivory-100/60">Shipping</span>
+                        <span className="text-emerald-400">Free</span>
+                      </div>
+                      <div className="flex justify-between mt-1">
+                        <span className="text-ivory-100/60">Tax (3%)</span>
+                        <span className="text-ivory-100">{formatCurrency(subtotal * 0.03)}</span>
+                      </div>
+                      <div className="flex justify-between mt-3 pt-3 border-t border-ivory-100/10">
+                        <span className="text-ivory-100 font-medium">Total</span>
+                        <span className="text-gold-300 font-serif">{formatCurrency(subtotal * 1.03)}</span>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
             {/* Footer */}
             <div className="border-t border-ivory-100/10 p-6 space-y-4 bg-charcoal-200/50">
               <div className="flex justify-between items-center">
@@ -137,13 +186,18 @@ const CartSidebar = () => {
               </div>
 
               <div className="pt-4 space-y-3">
-                <Link
-                  to="/checkout"
-                  onClick={() => document.dispatchEvent(new CustomEvent('toggle-cart'))}
+                <button
+                  onClick={handleProceedToCheckout}
                   className="btn-primary w-full text-center rounded-xl block"
                 >
                   Checkout — {formatCurrency(subtotal)}
-                </Link>
+                </button>
+                <button
+                  onClick={() => setShowDetails(!showDetails)}
+                  className="w-full py-3 text-sm text-gold-300 hover:text-gold-200 transition-colors border border-gold-300/30 rounded-xl"
+                >
+                  {showDetails ? 'Hide Details' : 'View Details'}
+                </button>
                 <button
                   onClick={clearCart}
                   className="w-full py-3 text-sm text-ivory-100/50 hover:text-red-400 transition-colors"
