@@ -15,6 +15,7 @@ const QuickViewModal = ({ product, isOpen, onClose }) => {
     for (let i = 0; i < quantity; i++) {
       addToCart(product);
     }
+    document.dispatchEvent(new CustomEvent('toggle-cart'));
     onClose();
   };
 
@@ -191,6 +192,7 @@ const ProductCard = ({ product }) => {
     e.stopPropagation();
     if (product.stockQuantity > 0) {
       addToCart(product);
+      document.dispatchEvent(new CustomEvent('toggle-cart'));
       setShowToast(true);
       setTimeout(() => setShowToast(false), 3000);
     }
@@ -346,12 +348,6 @@ const ProductCard = ({ product }) => {
               <p className="text-ivory-100 text-sm font-medium">Added to bag</p>
               <p className="text-ivory-100/50 text-xs">{product.name}</p>
             </div>
-            <Link
-              to="/cart"
-              className="ml-2 px-3 py-1.5 bg-gold-300/20 text-gold-300 text-xs rounded-lg hover:bg-gold-300/30 transition-colors"
-            >
-              View Bag
-            </Link>
           </motion.div>
         )}
       </AnimatePresence>

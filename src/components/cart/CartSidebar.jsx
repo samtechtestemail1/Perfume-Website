@@ -1,31 +1,55 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { formatCurrency } from '../../utils/currency';
 import { useCart } from '../../context/CartContext';
 
 const CartSidebar = () => {
-  const { cart, removeFromCart, updateQuantity, getCartTotal, clearCart } = useCart();
+  const { cart, removeFromCart, updateQuantity, getCartTotal, clearCart, getCartCount } = useCart();
+  const [isOpen, setIsOpen] = useState(false);
   const [showDetails, setShowDetails] = useState(false);
   const subtotal = getCartTotal();
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const handleToggleCart = () => {
+      setIsOpen((prev) => !prev);
+    };
+    document.addEventListener('toggle-cart', handleToggleCart);
+    return () => document.removeEventListener('toggle-cart', handleToggleCart);
+  }, []);
+
+  useEffect(() => {
+    if (isOpen && cart.length === 0) {
+      setIsOpen(false);
+    }
+  }, [cart.length, isOpen]);
+
+  const handleClose = () => {
+    setIsOpen(false);
+    setShowDetails(false);
+  };
+
   const handleProceedToCheckout = () => {
-    document.dispatchEvent(new CustomEvent('toggle-cart'));
+    handleClose();
     navigate('/checkout');
   };
 
+  if (getCartCount() === 0 && !isOpen) {
+    return null;
+  }
+
   return (
     <AnimatePresence>
-      {cart.length > 0 && (
+      {isOpen && (
         <>
           {/* Backdrop */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            onClick={() => document.dispatchEvent(new CustomEvent('toggle-cart'))}
-            className="fixed inset-0 bg-charcoal-500/80 backdrop-blur-sm z-50"
+            onClick={handleClose}
+            className="fixed inset-0 bg-charcoal-500/80 backdrop-blur-sm z-[200]"
           />
 
           {/* Sidebar */}
@@ -34,7 +58,7 @@ const CartSidebar = () => {
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
             transition={{ type: 'spring', damping: 30, stiffness: 300 }}
-            className="fixed top-0 right-0 h-full w-full max-w-md bg-charcoal-200/95 backdrop-blur-xl border-l border-ivory-100/10 z-50 flex flex-col"
+            className="fixed top-0 right-0 h-full w-full max-w-md bg-charcoal-200/95 backdrop-blur-xl border-l border-ivory-100/10 z-[201] flex flex-col"
           >
             {/* Header */}
             <div className="flex items-center justify-between p-6 border-b border-ivory-100/10">
@@ -52,7 +76,7 @@ const CartSidebar = () => {
                 </div>
               </div>
               <button
-                onClick={() => document.dispatchEvent(new CustomEvent('toggle-cart'))}
+                onClick={handleClose}
                 className="w-10 h-10 flex items-center justify-center text-ivory-100/70 hover:text-ivory-100 hover:bg-charcoal-100/50 rounded-full transition-all"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -89,7 +113,7 @@ const CartSidebar = () => {
                   <div className="flex-1 flex flex-col min-w-0">
                     <Link
                       to={`/product/${item.product._id}`}
-                      onClick={() => document.dispatchEvent(new CustomEvent('toggle-cart'))}
+                      onClick={handleClose}
                       className="text-sm font-serif text-ivory-100 mb-1 line-clamp-2 hover:text-gold-300 transition-colors"
                     >
                       {item.product.name}
