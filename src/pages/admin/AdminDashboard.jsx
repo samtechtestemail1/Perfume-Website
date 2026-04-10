@@ -10,10 +10,7 @@ const AdminDashboard = () => {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const token = localStorage.getItem('token');
-        const response = await api.get('/admin/dashboard', {
-          headers: { Authorization: `Bearer ${token}` }
-        });
+        const response = await api.get('/admin/dashboard');
         setStats(response.data.stats);
       } catch (error) {
         console.error('Failed to fetch stats:', error);

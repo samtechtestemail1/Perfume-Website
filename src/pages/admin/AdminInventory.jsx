@@ -13,14 +13,11 @@ const AdminInventory = () => {
 
   const fetchInventory = async () => {
     try {
-      const token = localStorage.getItem('token');
-      let url = '/api/admin/inventory';
+      let url = '/admin/inventory';
       if (filter !== 'all') {
         url += `?status=${filter}`;
       }
-      const response = await api.get(url, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      const response = await api.get(url);
       setProducts(response.data.products);
     } catch (error) {
       console.error('Failed to fetch inventory:', error);
@@ -31,14 +28,9 @@ const AdminInventory = () => {
 
   const updateStock = async (productId, newQuantity) => {
     try {
-      const token = localStorage.getItem('token');
-      const product = products.find(p => p._id === productId);
-      
       await api.put(`/products/${productId}/stock`, {
         quantity: newQuantity,
         reason: 'Manual adjustment'
-      }, {
-        headers: { Authorization: `Bearer ${token}` }
       });
       fetchInventory();
     } catch (error) {

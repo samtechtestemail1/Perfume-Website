@@ -12,10 +12,7 @@ const AdminOrders = () => {
 
   const fetchOrders = async () => {
     try {
-      const token = localStorage.getItem('token');
-        const response = await api.get('/orders/all', {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      const response = await api.get('/orders/all');
       setOrders(response.data.orders);
     } catch (error) {
       console.error('Failed to fetch orders:', error);
@@ -26,10 +23,7 @@ const AdminOrders = () => {
 
   const updateStatus = async (orderId, status) => {
     try {
-      const token = localStorage.getItem('token');
-      await api.put(`/orders/${orderId}/status`, { orderStatus: status }, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      await api.put(`/orders/${orderId}/status`, { orderStatus: status });
       fetchOrders();
     } catch (error) {
       console.error('Failed to update order:', error);

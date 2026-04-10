@@ -12,10 +12,7 @@ const AdminUsers = () => {
 
   const fetchUsers = async () => {
     try {
-      const token = localStorage.getItem('token');
-        const response = await api.get('/admin/users', {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      const response = await api.get('/admin/users');
       setUsers(response.data.users);
     } catch (error) {
       console.error('Failed to fetch users:', error);
@@ -26,10 +23,7 @@ const AdminUsers = () => {
 
   const updateRole = async (userId, role) => {
     try {
-      const token = localStorage.getItem('token');
-      await api.put(`/admin/users/${userId}`, { role }, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      await api.put(`/admin/users/${userId}`, { role });
       fetchUsers();
     } catch (error) {
       console.error('Failed to update user:', error);
