@@ -33,7 +33,6 @@ const AdminInventory = () => {
     try {
       const token = localStorage.getItem('token');
       const product = products.find(p => p._id === productId);
-      const change = newQuantity - product.stockQuantity;
       
       await axios.put(`/api/products/${productId}/stock`, {
         quantity: newQuantity,
@@ -49,71 +48,80 @@ const AdminInventory = () => {
 
   const getStatusBadge = (product) => {
     if (product.stockQuantity === 0) {
-      return <span className="badge bg-red-100 text-red-700">Out of Stock</span>;
+      return <span className="badge bg-red-500/20 text-red-400 border border-red-500/30">Out of Stock</span>;
     }
     if (product.stockQuantity <= product.lowStockThreshold) {
-      return <span className="badge bg-orange-100 text-orange-700">Low Stock</span>;
+      return <span className="badge bg-orange-500/20 text-orange-400 border border-orange-500/30">Low Stock</span>;
     }
-    return <span className="badge bg-green-100 text-green-700">In Stock</span>;
+    return <span className="badge bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">In Stock</span>;
+  };
+
+  const stats = {
+    inStock: products.filter(p => p.stockQuantity > p.lowStockThreshold).length,
+    lowStock: products.filter(p => p.stockQuantity > 0 && p.stockQuantity <= p.lowStockThreshold).length,
+    outOfStock: products.filter(p => p.stockQuantity === 0).length
   };
 
   return (
-    <div className="pt-20 bg-dark-50 min-h-screen">
-      <div className="container mx-auto px-4 py-12">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8"
-        >
-          <div>
-            <h1 className="text-4xl font-serif font-bold text-dark-900 mb-2">Inventory</h1>
-            <p className="text-dark-600">Monitor and manage stock levels</p>
-          </div>
+    <div className="min-h-screen bg-charcoal-300">
+      <div className="bg-charcoal-200/50 border-b border-ivory-100/10">
+        <div className="container mx-auto px-6 py-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="flex flex-col md:flex-row md:items-center md:justify-between gap-4"
+          >
+            <div>
+              <h1 className="heading-3 text-ivory-100">Inventory</h1>
+              <p className="text-ivory-100/50 font-light mt-1">Monitor and manage stock levels</p>
+            </div>
 
-          <div className="flex gap-2">
-            {['all', 'in', 'low', 'out'].map((status) => (
-              <button
-                key={status}
-                onClick={() => setFilter(status)}
-                className={`px-4 py-2 rounded-lg transition-colors ${
-                  filter === status
-                    ? 'bg-gold-400 text-dark-900'
-                    : 'bg-white text-dark-600 hover:bg-dark-100'
-                }`}
-              >
-                {status === 'all' ? 'All' : status === 'in' ? 'In Stock' : status === 'low' ? 'Low Stock' : 'Out of Stock'}
-              </button>
-            ))}
-          </div>
-        </motion.div>
+            <div className="flex gap-2">
+              {[
+                { key: 'all', label: 'All' },
+                { key: 'in', label: 'In Stock' },
+                { key: 'low', label: 'Low Stock' },
+                { key: 'out', label: 'Out of Stock' }
+              ].map((status) => (
+                <button
+                  key={status.key}
+                  onClick={() => setFilter(status.key)}
+                  className={`px-4 py-2 rounded-lg transition-all text-sm font-light ${
+                    filter === status.key
+                      ? 'bg-gold-300 text-charcoal-300'
+                      : 'bg-charcoal-100/30 border border-ivory-100/10 text-ivory-100/70 hover:text-ivory-100 hover:border-ivory-100/30'
+                  }`}
+                >
+                  {status.label}
+                </button>
+              ))}
+            </div>
+          </motion.div>
+        </div>
+      </div>
 
+      <div className="container mx-auto px-6 py-8">
         {/* Stats */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <div className="bg-white rounded-2xl p-6 shadow-lg">
-            <p className="text-3xl font-bold text-dark-900">
-              {products.filter(p => p.status === 'in_stock').length}
-            </p>
-            <p className="text-dark-500">In Stock</p>
+          <div className="bg-charcoal-100/30 border border-emerald-500/20 rounded-2xl p-6">
+            <p className="text-3xl font-serif text-emerald-400 mb-1">{stats.inStock}</p>
+            <p className="text-ivory-100/50 text-sm font-light">In Stock</p>
           </div>
-          <div className="bg-white rounded-2xl p-6 shadow-lg">
-            <p className="text-3xl font-bold text-orange-600">
-              {products.filter(p => p.status === 'low_stock').length}
-            </p>
-            <p className="text-dark-500">Low Stock</p>
+          <div className="bg-charcoal-100/30 border border-orange-500/20 rounded-2xl p-6">
+            <p className="text-3xl font-serif text-orange-400 mb-1">{stats.lowStock}</p>
+            <p className="text-ivory-100/50 text-sm font-light">Low Stock</p>
           </div>
-          <div className="bg-white rounded-2xl p-6 shadow-lg">
-            <p className="text-3xl font-bold text-red-600">
-              {products.filter(p => p.status === 'out_of_stock').length}
-            </p>
-            <p className="text-dark-500">Out of Stock</p>
+          <div className="bg-charcoal-100/30 border border-red-500/20 rounded-2xl p-6">
+            <p className="text-3xl font-serif text-red-400 mb-1">{stats.outOfStock}</p>
+            <p className="text-ivory-100/50 text-sm font-light">Out of Stock</p>
           </div>
         </div>
 
         {loading ? (
-          <div className="bg-white rounded-2xl p-8 shadow-lg">
+          <div className="bg-charcoal-100/30 border border-ivory-100/10 rounded-2xl p-8">
             <div className="space-y-4">
               {[...Array(5)].map((_, i) => (
-                <div key={i} className="h-20 bg-dark-100 rounded-lg animate-pulse"></div>
+                <div key={i} className="skeleton h-20 rounded-xl" />
               ))}
             </div>
           </div>
@@ -121,36 +129,36 @@ const AdminInventory = () => {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="bg-white rounded-2xl shadow-lg overflow-hidden"
+            className="bg-charcoal-100/30 border border-ivory-100/10 rounded-2xl overflow-hidden backdrop-blur-sm"
           >
             <div className="overflow-x-auto">
               <table className="w-full">
-                <thead className="bg-dark-50">
-                  <tr>
-                    <th className="px-6 py-4 text-left text-sm font-semibold text-dark-900">Product</th>
-                    <th className="px-6 py-4 text-left text-sm font-semibold text-dark-900">SKU</th>
-                    <th className="px-6 py-4 text-left text-sm font-semibold text-dark-900">Category</th>
-                    <th className="px-6 py-4 text-left text-sm font-semibold text-dark-900">Stock</th>
-                    <th className="px-6 py-4 text-left text-sm font-semibold text-dark-900">Threshold</th>
-                    <th className="px-6 py-4 text-left text-sm font-semibold text-dark-900">Status</th>
-                    <th className="px-6 py-4 text-left text-sm font-semibold text-dark-900">Update Stock</th>
+                <thead>
+                  <tr className="border-b border-ivory-100/10">
+                    <th className="px-6 py-5 text-left text-xs uppercase tracking-ultra-wide text-ivory-100/50 font-light">Product</th>
+                    <th className="px-6 py-5 text-left text-xs uppercase tracking-ultra-wide text-ivory-100/50 font-light">SKU</th>
+                    <th className="px-6 py-5 text-left text-xs uppercase tracking-ultra-wide text-ivory-100/50 font-light">Category</th>
+                    <th className="px-6 py-5 text-left text-xs uppercase tracking-ultra-wide text-ivory-100/50 font-light">Stock</th>
+                    <th className="px-6 py-5 text-left text-xs uppercase tracking-ultra-wide text-ivory-100/50 font-light">Threshold</th>
+                    <th className="px-6 py-5 text-left text-xs uppercase tracking-ultra-wide text-ivory-100/50 font-light">Status</th>
+                    <th className="px-6 py-5 text-left text-xs uppercase tracking-ultra-wide text-ivory-100/50 font-light">Update Stock</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-dark-100">
+                <tbody className="divide-y divide-ivory-100/5">
                   {products.map((product) => (
-                    <tr key={product._id} className="hover:bg-dark-50 transition-colors">
-                      <td className="px-6 py-4 font-medium text-dark-900">{product.name}</td>
-                      <td className="px-6 py-4 text-dark-600">{product.sku || 'N/A'}</td>
-                      <td className="px-6 py-4 text-dark-600 capitalize">{product.category}</td>
-                      <td className="px-6 py-4 font-semibold text-dark-900">{product.stockQuantity}</td>
-                      <td className="px-6 py-4 text-dark-600">{product.lowStockThreshold}</td>
-                      <td className="px-6 py-4">{getStatusBadge(product)}</td>
-                      <td className="px-6 py-4">
+                    <tr key={product._id} className="hover:bg-charcoal-200/30 transition-colors">
+                      <td className="px-6 py-5 text-ivory-100 font-medium">{product.name}</td>
+                      <td className="px-6 py-5 text-ivory-100/70 font-light">{product.sku || 'N/A'}</td>
+                      <td className="px-6 py-5 text-ivory-100/70 capitalize font-light">{product.category}</td>
+                      <td className="px-6 py-5 text-ivory-100 font-medium">{product.stockQuantity}</td>
+                      <td className="px-6 py-5 text-ivory-100/70 font-light">{product.lowStockThreshold}</td>
+                      <td className="px-6 py-5">{getStatusBadge(product)}</td>
+                      <td className="px-6 py-5">
                         <input
                           type="number"
                           defaultValue={product.stockQuantity}
                           min="0"
-                          className="w-24 px-3 py-2 border border-dark-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-gold-400"
+                          className="w-24 px-4 py-2 bg-charcoal-200/50 border border-ivory-100/10 text-ivory-100 rounded-lg text-sm focus:outline-none focus:border-gold-300 transition-colors"
                           onKeyPress={(e) => {
                             if (e.key === 'Enter') {
                               updateStock(product._id, parseInt(e.target.value));

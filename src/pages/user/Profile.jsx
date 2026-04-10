@@ -82,22 +82,25 @@ const Profile = () => {
   };
 
   return (
-    <div className="pt-20 bg-dark-50 min-h-screen">
-      <div className="container mx-auto px-4 py-12">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="mb-12"
-        >
-          <h1 className="text-4xl font-serif font-bold text-dark-900 mb-2">My Profile</h1>
-          <p className="text-dark-600">Manage your account settings</p>
-        </motion.div>
+    <div className="min-h-screen bg-charcoal-300">
+      <div className="bg-charcoal-200/50 border-b border-ivory-100/10">
+        <div className="container mx-auto px-6 py-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+          >
+            <h1 className="heading-3 text-ivory-100">My Profile</h1>
+            <p className="text-ivory-100/50 font-light mt-1">Manage your account settings</p>
+          </motion.div>
+        </div>
+      </div>
 
+      <div className="container mx-auto px-6 py-8">
         {error && (
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg text-red-700"
+            className="mb-6 p-4 bg-red-500/10 border border-red-500/30 rounded-xl text-red-400"
           >
             {error}
           </motion.div>
@@ -107,7 +110,7 @@ const Profile = () => {
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg text-green-700"
+            className="mb-6 p-4 bg-emerald-500/10 border border-emerald-500/30 rounded-xl text-emerald-400"
           >
             Profile updated successfully!
           </motion.div>
@@ -118,47 +121,45 @@ const Profile = () => {
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-            className="bg-white rounded-2xl p-8 shadow-lg"
+            className="bg-charcoal-100/30 border border-ivory-100/10 rounded-2xl p-8 backdrop-blur-sm"
           >
-            <h2 className="text-2xl font-semibold text-dark-900 mb-6">Personal Information</h2>
+            <h2 className="heading-4 text-ivory-100 mb-6">Personal Information</h2>
 
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
-                <label className="block text-sm font-medium text-dark-700 mb-2">Full Name</label>
+                <label className="section-label mb-3 block">Full Name</label>
                 <input
                   type="text"
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="input-field"
+                  className="w-full px-5 py-4 bg-charcoal-200/50 border border-ivory-100/10 text-ivory-100 focus:outline-none focus:border-gold-300 transition-colors rounded-xl"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-dark-700 mb-2">Email Address</label>
+                <label className="section-label mb-3 block">Email Address</label>
                 <input
                   type="email"
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="input-field"
+                  className="w-full px-5 py-4 bg-charcoal-200/50 border border-ivory-100/10 text-ivory-100 focus:outline-none focus:border-gold-300 transition-colors rounded-xl"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-dark-700 mb-2">Phone Number</label>
+                <label className="section-label mb-3 block">Phone Number</label>
                 <input
                   type="tel"
                   value={formData.phone}
                   onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                  className="input-field"
+                  className="w-full px-5 py-4 bg-charcoal-200/50 border border-ivory-100/10 text-ivory-100 focus:outline-none focus:border-gold-300 transition-colors rounded-xl"
                   placeholder="+1 (555) 123-4567"
                 />
               </div>
 
-              <div className="pt-4">
-                <button type="submit" disabled={loading} className="btn-primary disabled:opacity-50">
-                  {loading ? 'Saving...' : 'Save Changes'}
-                </button>
-              </div>
+              <button type="submit" disabled={loading} className="btn-primary rounded-xl disabled:opacity-50">
+                {loading ? 'Saving...' : 'Save Changes'}
+              </button>
             </form>
           </motion.div>
 
@@ -166,13 +167,13 @@ const Profile = () => {
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
-            className="bg-white rounded-2xl p-8 shadow-lg"
+            className="bg-charcoal-100/30 border border-ivory-100/10 rounded-2xl p-8 backdrop-blur-sm"
           >
-            <h2 className="text-2xl font-semibold text-dark-900 mb-6">Shipping Address</h2>
+            <h2 className="heading-4 text-ivory-100 mb-6">Shipping Address</h2>
 
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
-                <label className="block text-sm font-medium text-dark-700 mb-2">Street Address</label>
+                <label className="section-label mb-3 block">Street Address</label>
                 <input
                   type="text"
                   value={formData.address.street}
@@ -180,14 +181,14 @@ const Profile = () => {
                     ...formData,
                     address: { ...formData.address, street: e.target.value }
                   })}
-                  className="input-field"
+                  className="w-full px-5 py-4 bg-charcoal-200/50 border border-ivory-100/10 text-ivory-100 placeholder-charcoal-400 focus:outline-none focus:border-gold-300 transition-colors rounded-xl"
                   placeholder="123 Main Street"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-dark-700 mb-2">City</label>
+                  <label className="section-label mb-3 block">City</label>
                   <input
                     type="text"
                     value={formData.address.city}
@@ -195,11 +196,11 @@ const Profile = () => {
                       ...formData,
                       address: { ...formData.address, city: e.target.value }
                     })}
-                    className="input-field"
+                    className="w-full px-5 py-4 bg-charcoal-200/50 border border-ivory-100/10 text-ivory-100 placeholder-charcoal-400 focus:outline-none focus:border-gold-300 transition-colors rounded-xl"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-dark-700 mb-2">State</label>
+                  <label className="section-label mb-3 block">State</label>
                   <input
                     type="text"
                     value={formData.address.state}
@@ -207,14 +208,14 @@ const Profile = () => {
                       ...formData,
                       address: { ...formData.address, state: e.target.value }
                     })}
-                    className="input-field"
+                    className="w-full px-5 py-4 bg-charcoal-200/50 border border-ivory-100/10 text-ivory-100 placeholder-charcoal-400 focus:outline-none focus:border-gold-300 transition-colors rounded-xl"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-dark-700 mb-2">ZIP Code</label>
+                  <label className="section-label mb-3 block">ZIP Code</label>
                   <input
                     type="text"
                     value={formData.address.zipCode}
@@ -222,11 +223,11 @@ const Profile = () => {
                       ...formData,
                       address: { ...formData.address, zipCode: e.target.value }
                     })}
-                    className="input-field"
+                    className="w-full px-5 py-4 bg-charcoal-200/50 border border-ivory-100/10 text-ivory-100 placeholder-charcoal-400 focus:outline-none focus:border-gold-300 transition-colors rounded-xl"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-dark-700 mb-2">Country</label>
+                  <label className="section-label mb-3 block">Country</label>
                   <input
                     type="text"
                     value={formData.address.country}
@@ -234,16 +235,14 @@ const Profile = () => {
                       ...formData,
                       address: { ...formData.address, country: e.target.value }
                     })}
-                    className="input-field"
+                    className="w-full px-5 py-4 bg-charcoal-200/50 border border-ivory-100/10 text-ivory-100 placeholder-charcoal-400 focus:outline-none focus:border-gold-300 transition-colors rounded-xl"
                   />
                 </div>
               </div>
 
-              <div className="pt-4">
-                <button type="submit" disabled={loading} className="btn-primary disabled:opacity-50">
-                  {loading ? 'Saving...' : 'Save Address'}
-                </button>
-              </div>
+              <button type="submit" disabled={loading} className="btn-primary rounded-xl disabled:opacity-50">
+                {loading ? 'Saving...' : 'Save Address'}
+              </button>
             </form>
           </motion.div>
         </div>
@@ -253,42 +252,42 @@ const Profile = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="mt-8 bg-white rounded-2xl p-8 shadow-lg"
+          className="mt-8 bg-charcoal-100/30 border border-ivory-100/10 rounded-2xl p-8 backdrop-blur-sm"
         >
-          <h2 className="text-2xl font-semibold text-dark-900 mb-6">Change Password</h2>
+          <h2 className="heading-4 text-ivory-100 mb-6">Change Password</h2>
 
           <form onSubmit={handlePasswordChange} className="max-w-lg space-y-6">
             <div>
-              <label className="block text-sm font-medium text-dark-700 mb-2">Current Password</label>
+              <label className="section-label mb-3 block">Current Password</label>
               <input
                 type="password"
                 value={passwordData.currentPassword}
                 onChange={(e) => setPasswordData({ ...passwordData, currentPassword: e.target.value })}
-                className="input-field"
+                className="w-full px-5 py-4 bg-charcoal-200/50 border border-ivory-100/10 text-ivory-100 placeholder-charcoal-400 focus:outline-none focus:border-gold-300 transition-colors rounded-xl"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-dark-700 mb-2">New Password</label>
+              <label className="section-label mb-3 block">New Password</label>
               <input
                 type="password"
                 value={passwordData.newPassword}
                 onChange={(e) => setPasswordData({ ...passwordData, newPassword: e.target.value })}
-                className="input-field"
+                className="w-full px-5 py-4 bg-charcoal-200/50 border border-ivory-100/10 text-ivory-100 placeholder-charcoal-400 focus:outline-none focus:border-gold-300 transition-colors rounded-xl"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-dark-700 mb-2">Confirm New Password</label>
+              <label className="section-label mb-3 block">Confirm New Password</label>
               <input
                 type="password"
                 value={passwordData.confirmPassword}
                 onChange={(e) => setPasswordData({ ...passwordData, confirmPassword: e.target.value })}
-                className="input-field"
+                className="w-full px-5 py-4 bg-charcoal-200/50 border border-ivory-100/10 text-ivory-100 placeholder-charcoal-400 focus:outline-none focus:border-gold-300 transition-colors rounded-xl"
               />
             </div>
 
-            <button type="submit" disabled={loading} className="btn-primary disabled:opacity-50">
+            <button type="submit" disabled={loading} className="btn-primary rounded-xl disabled:opacity-50">
               {loading ? 'Changing...' : 'Change Password'}
             </button>
           </form>
