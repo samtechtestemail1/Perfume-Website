@@ -78,7 +78,6 @@ const Checkout = () => {
     street: user?.address?.street || '',
     city: user?.address?.city || '',
     state: user?.address?.state || '',
-    zipCode: user?.address?.zipCode || '',
     country: user?.address?.country || 'Ghana',
     phone: user?.phone || ''
   });
@@ -144,7 +143,6 @@ const Checkout = () => {
     if (!shippingAddress.street.trim()) errors.street = 'Street address is required';
     if (!shippingAddress.city.trim()) errors.city = 'City is required';
     if (!shippingAddress.state.trim()) errors.state = 'Region is required';
-    if (!shippingAddress.zipCode.trim()) errors.zipCode = 'Postal code is required';
     setFormErrors(errors);
     return Object.keys(errors).length === 0;
   };
@@ -441,8 +439,8 @@ const Checkout = () => {
                         {formErrors.street && <p className="text-red-400 text-xs mt-1">{formErrors.street}</p>}
                       </div>
 
-                      <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
-                        <div className="col-span-2">
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+                        <div>
                           <label className="block text-sm text-ivory-100/70 mb-2 font-light">City / Town</label>
                           <input
                             type="text"
@@ -463,17 +461,6 @@ const Checkout = () => {
                             placeholder="Greater Accra"
                           />
                           {formErrors.state && <p className="text-red-400 text-xs mt-1">{formErrors.state}</p>}
-                        </div>
-                        <div>
-                          <label className="block text-sm text-ivory-100/70 mb-2 font-light">Postal Code</label>
-                          <input
-                            type="text"
-                            value={shippingAddress.zipCode}
-                            onChange={(e) => setShippingAddress({ ...shippingAddress, zipCode: e.target.value })}
-                            className={inputClass(formErrors.zipCode)}
-                            placeholder="00233"
-                          />
-                          {formErrors.zipCode && <p className="text-red-400 text-xs mt-1">{formErrors.zipCode}</p>}
                         </div>
                       </div>
 
@@ -519,7 +506,7 @@ const Checkout = () => {
                       <div className="bg-charcoal-200/30 rounded-xl p-4 space-y-1">
                         <p className="text-ivory-100 font-medium">{shippingAddress.fullName}</p>
                         <p className="text-ivory-100/70 text-sm">{shippingAddress.street}</p>
-                        <p className="text-ivory-100/70 text-sm">{shippingAddress.city}, {shippingAddress.state} {shippingAddress.zipCode}</p>
+                        <p className="text-ivory-100/70 text-sm">{shippingAddress.city}, {shippingAddress.state}</p>
                         <p className="text-ivory-100/70 text-sm">{shippingAddress.phone}</p>
                       </div>
                     </div>

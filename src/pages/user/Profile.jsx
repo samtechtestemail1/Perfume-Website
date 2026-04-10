@@ -17,7 +17,6 @@ const Profile = () => {
       street: user?.address?.street || '',
       city: user?.address?.city || '',
       state: user?.address?.state || '',
-      zipCode: user?.address?.zipCode || '',
       country: user?.address?.country || ''
     }
   });
@@ -197,21 +196,6 @@ const Profile = () => {
                     onChange={(e) => setFormData({
                       ...formData,
                       address: { ...formData.address, state: e.target.value }
-                    })}
-                    className="w-full px-5 py-4 bg-charcoal-200/50 border border-ivory-100/10 text-ivory-100 placeholder-charcoal-400 focus:outline-none focus:border-gold-300 transition-colors rounded-xl"
-                  />
-                </div>
-              </div>
-
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="section-label mb-3 block">ZIP Code</label>
-                  <input
-                    type="text"
-                    value={formData.address.zipCode}
-                    onChange={(e) => setFormData({
-                      ...formData,
-                      address: { ...formData.address, zipCode: e.target.value }
                     })}
                     className="w-full px-5 py-4 bg-charcoal-200/50 border border-ivory-100/10 text-ivory-100 placeholder-charcoal-400 focus:outline-none focus:border-gold-300 transition-colors rounded-xl"
                   />

@@ -381,7 +381,7 @@ const AdminOrders = () => {
                         )}
                         <p className="text-ivory-100/70 text-sm">{orderDetails.shippingAddress.street}</p>
                         <p className="text-ivory-100/70 text-sm">
-                          {orderDetails.shippingAddress.city}, {orderDetails.shippingAddress.state} {orderDetails.shippingAddress.zipCode}
+                          {orderDetails.shippingAddress.city}, {orderDetails.shippingAddress.state}
                         </p>
                         <p className="text-ivory-100/70 text-sm">{orderDetails.shippingAddress.country}</p>
                         <p className="text-ivory-100/70 text-sm mt-2 flex items-center gap-2">
