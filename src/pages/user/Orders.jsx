@@ -246,13 +246,14 @@ const Orders = () => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setSelectedOrder(null)}
-              className="fixed inset-0 bg-charcoal-500/95 backdrop-blur-md z-[100]"
+              className="fixed inset-0 bg-black/80 backdrop-blur-md z-[100] flex items-center justify-center p-4"
             />
             <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              initial={{ opacity: 0, scale: 0.9, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="fixed inset-4 lg:inset-auto lg:top-1/2 lg:left-1/2 lg:-translate-x-1/2 lg:-translate-y-1/2 z-[101] max-w-3xl w-full lg:max-h-[90vh] overflow-y-auto"
+              exit={{ opacity: 0, scale: 0.9, y: 20 }}
+              transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+              className="relative z-[101] w-full max-w-3xl max-h-[90vh] overflow-hidden flex flex-col"
             >
               <div className="bg-charcoal-100/95 border border-ivory-100/10 rounded-3xl overflow-hidden shadow-2xl">
                 {detailsLoading ? (
